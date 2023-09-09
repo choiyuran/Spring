@@ -1,0 +1,8 @@
+pom.xml 		-> web.xml 	-> root-context.xml 	-> servlet-context.xml
+java-version		copy&paste	copy&paste		topLevelPackageRename
+spring-version
+source
+target
+dependency
+
+HomeController.java -> home.jsp
