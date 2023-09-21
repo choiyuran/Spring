@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC 
+	"-//mybatis.org//DTD Config 3.0//EN" 
+	"https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- 부르기 쉽게 별명, 별칭을 지정해준다 -->
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.itbank.model.MemberDTO" alias="member"/>	
+		<typeAlias type="com.itbank.model.BoardDTO" alias="board"/>	
+	</typeAliases>
+</configuration>

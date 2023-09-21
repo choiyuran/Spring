@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+		"-//mybatis.org//DTD Mapper 3.0//EN" 
+		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<!-- mapper의 namespace는 연결할 dao 인터페이스의 풀네임을 작성한다 -->		
+<mapper namespace="com.itbank.repository.BoardDAO">
+	<insert id="insertBoard" parameterType="board">
+		insert into board4
+			(
+				title, 
+				member2_idx, 
+				<if test="fileName != null">fileName,</if>	<!-- 조건에 el태그 안넣고 그냥 쓴다!(동적 SQL) -->
+				content
+			)
+		values
+			(
+				#{title},
+				#{member2_idx},
+				<if test="fileName != null">#{fileName},</if>
+				#{content}
+			)
+			
+	</insert>
+	
+	<select id="selectMaxIdx" resultType="int">
+		select max(idx) from board4
+	</select>
+
+	<select id="selectAll" resultType="board">
+		select 
+		    Bo.idx, Bo.title,
+		    Me.username as member2_username,
+		    Bo.fileName,
+		    Bo.viewCount,
+		    Bo.wdate 
+		    	from board4 Bo
+		        join member2 Me
+		      	  on Bo.member2_idx = Me.idx  
+		        order by idx desc
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="board">
+			select 
+		    Bo.idx, Bo.title,
+		    Me.username as member2_username,
+		    Me.userid as member2_userid,
+		    Bo.content,
+		    Bo.fileName,
+		    Bo.viewCount,
+		    Bo.wdate
+		    	from board4 Bo
+		        join member2 Me
+		      	  on Bo.member2_idx = Me.idx  
+		      	  where Bo.idx=#{idx}
+		        order by idx desc
+	</select>
+	
+	<select id="selectFileName" resultType="String" parameterType="int">
+		select fileName from board4 where idx=#{idx}
+	
+	</select>
+	
+	<delete id="deleteBoard" parameterType="int">
+		delete board4 where idx=#{idx}
+	</delete>
+</mapper>
