@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+		"-//mybatis.org//DTD Mapper 3.0//EN" 
+		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	
+<mapper namespace="com.itbank.repository.AccountDAO">
+	<select id="selectOneByUserid" parameterType="String" resultType="account">
+		select * from account 
+			where userid=#{userid}
+	</select>
+	
+	<insert id="accountJoin" parameterType="account">
+		insert into account
+			(userid, userpw, username, salt)
+			values(#{userid}, #{userpw}, #{username}, #{salt})
+	</insert>
+</mapper>
+
+
+
+
+
+
+
+

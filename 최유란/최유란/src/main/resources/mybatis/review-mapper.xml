@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+		"-//mybatis.org//DTD Mapper 3.0//EN" 
+		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	
+<mapper namespace="com.itbank.repository.ReviewDAO">
+	<select id="selectAll" resultType="review">
+		select 
+		    RE.idx,
+		    RE.title,
+		    RE.wdate,
+		    RE.fileName,
+		    AC.userid as account_userid
+		    	from review RE
+		    		join account AC
+		    		on RE.account_idx = AC.idx
+		    		order by RE.idx desc
+	</select>
+	
+	<insert id="reviewWrite" parameterType="review">
+		insert into review
+			(title, content, account_idx, fileName)
+			values(#{title}, #{content}, #{account_idx}, #{fileName})
+	</insert>
+	
+	<select id="getMaxIdx" resultType="int">
+		select max(idx) from review
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="review">
+	 	select 
+		    RE.idx,
+		    RE.title,
+		    RE.wdate,
+		    RE.content,
+		    RE.fileName,
+		    AC.userid as account_userid
+		    	from review RE
+		    		join account AC
+		    		on RE.account_idx = AC.idx
+		    		where RE.idx=#{idx}
+	</select>
+	
+	<delete id="reviewDelete" parameterType="int">
+		delete from review where idx=#{idx}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
