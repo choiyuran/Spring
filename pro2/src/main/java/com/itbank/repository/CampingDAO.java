@@ -6,6 +6,7 @@ import com.itbank.model.CampingDTO;
 public interface CampingDAO {
 	List<CampingDTO> selectAll();
 
-	CampingDTO selectOne(String name);
+	CampingDTO selectOne(String facltnm);
+
 
 }

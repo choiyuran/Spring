@@ -4,9 +4,9 @@
 
 <c:forEach var="row" items="${list }">
 	<div>
-		<a class="link" data-addr="${row.addr}">
-			${row.name }
-			${row.addr }
+		<a class="link" data-addr="${row.addr1 }" data-facltnm="${row.facltnm }">
+			${row.facltnm }
+			${row.addr1 }
 		</a>		
 	</div>
 </c:forEach>
@@ -27,12 +27,14 @@
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
-		
+
 		var links = document.querySelectorAll('.link')
+		
 		
 		links.forEach(function(link) {
 			link.addEventListener('click', function() {
 				var addr = link.getAttribute('data-addr')
+				var facltnm = link.getAttribute('data-facltnm')
 				console.log(addr)
 	
 				// 주소로 좌표를 검색합니다
@@ -49,11 +51,24 @@
 				            position: coords
 				        });
 				
-				        // 인포윈도우로 장소에 대한 설명을 표시합니다
+				     	// 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
+				        var iwContent = '<div style="padding:5px; text-align:center;">' + facltnm + '</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+
+				        // 인포윈도우를 생성합니다
 				        var infowindow = new kakao.maps.InfoWindow({
-				            content: '<div style="width:100px;text-align:center;padding:6px 0;">' + addr + '</div>'
+				            content : iwContent
 				        });
-				        infowindow.open(map, marker);
+				     	// 마커에 마우스오버 이벤트를 등록합니다
+				        kakao.maps.event.addListener(marker, 'mouseover', function() {
+				          // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+				            infowindow.open(map, marker);
+				        });
+
+				        // 마커에 마우스아웃 이벤트를 등록합니다
+				        kakao.maps.event.addListener(marker, 'mouseout', function() {
+				            // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+				            infowindow.close();
+				        });
 				
 				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 				        map.setCenter(coords);

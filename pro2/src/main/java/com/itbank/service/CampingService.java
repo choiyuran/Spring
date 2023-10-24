@@ -18,9 +18,11 @@ public class CampingService {
 		return list;
 	}
 
-	public CampingDTO selectOne(String name) {
-		return campingDAO.selectOne(name);
+	public CampingDTO selectOne(String facltnm) {
+		return campingDAO.selectOne(facltnm);
 	}
+
+
 
 
 }

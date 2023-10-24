@@ -1,22 +1,30 @@
 package com.itbank.model;
 
 public class CampingDTO {
-	private String name;
-	private String addr;
-	private String mapX;
-	private String mapY;
+	public int getCamping_idx() {
+		return camping_idx;
+	}
+	public void setCamping_idx(int camping_idx) {
+		this.camping_idx = camping_idx;
+	}
+	private int camping_idx;
+	private String facltnm;			// 이름
+	private String addr1;			// 주소
 	
-	public String getName() {
-		return name;
+	private String mapX;				// 조인 데이터
+	private String mapY;				// 조인 데이터
+	
+	public String getFacltnm() {
+		return facltnm;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setFacltnm(String facltnm) {
+		this.facltnm = facltnm;
 	}
-	public String getAddr() {
-		return addr;
+	public String getAddr1() {
+		return addr1;
 	}
-	public void setAddr(String addr) {
-		this.addr = addr;
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
 	}
 	public String getMapX() {
 		return mapX;
@@ -30,6 +38,8 @@ public class CampingDTO {
 	public void setMapY(String mapY) {
 		this.mapY = mapY;
 	}
+	
+	
 	
 	
 }

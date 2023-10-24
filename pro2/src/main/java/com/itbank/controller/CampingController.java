@@ -24,10 +24,10 @@ public class CampingController {
 		return mav;
 	}
 	
-	@GetMapping("/view/{name}")
-	public ModelAndView view(@PathVariable("name") String name) {
+	@GetMapping("/view/{facltnm}")
+	public ModelAndView view(@PathVariable("facltnm") String facltnm) {
 		ModelAndView mav = new ModelAndView("view");
-		CampingDTO dto = campingService.selectOne(name);
+		CampingDTO dto = campingService.selectOne(facltnm);
 		mav.addObject("dto", dto);
 		return mav;
 	}

@@ -6,13 +6,14 @@
 <mapper namespace="com.itbank.repository.CampingDAO">
 
 	<select id="selectAll" resultType="camping">
-		select * from camping2 order by name
+		select c.*, p.mapX, p.mapY 
+  		  	from camping c
+    	 	join camping_place p
+    		on c.camping_idx = p.camping_idx
 	</select>
 	
 	<select id="selectOne" parameterType="String" resultType="camping">
-		select * from camping2 where name=#{name}
-	
+		select * from camping where facltnm= #{facltnm}
 	</select>
-	
 	
 </mapper>
