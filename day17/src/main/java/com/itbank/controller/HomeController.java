@@ -14,4 +14,6 @@ public class HomeController {
 	@GetMapping("/ex01")
 	public void ex01() {}
 	
+	@GetMapping("/ex02")
+	public void ex02() {}
 }

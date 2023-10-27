@@ -4,6 +4,7 @@
 
 <ul>
 	<li><a href="${cpath }/ex01">ex01 - 기본 차트2</a></li>
+	<li><a href="${cpath }/ex02">ex02 - API 데이터 차트</a></li>
 </ul>
 
 </body>

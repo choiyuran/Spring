@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="header.jsp" %>
-<Script src="https://cdn.jsdelivr.net/npm/chart.js"></Script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <h3>ex01.jsp</h3>
 
