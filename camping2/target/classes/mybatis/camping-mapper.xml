@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+		"-//mybatis.org//DTD Mapper 3.0//EN" 
+		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="com.itbank.repository.CampingDAO">
+	<select id="getTotalCount" resultType="int">
+		select count(*) from camping
+	</select>
+	
+	<select id="selectAll" resultType="camping" parameterType="hashmap">
+		select c.camping_idx, c.facltNm, c.featurenm, c.intro, c.lineintro, c.tel, c.lctcl, c.addr1, c.camping_viewcount, ci.sbrscl, cimg.first_img 
+                from camping c 
+                    join camping_internal ci on c.camping_idx = ci.camping_idx 
+                    join camping_img cimg on c.camping_idx = cimg.camping_idx
+                    where cimg.first_img is not null 
+                    order by c.camping_idx desc
+                    offset #{paging.offset} rows
+                    fetch next #{paging.perPage} rows only
+	</select>
+	
+	
+	<select id="selectOne" parameterType="int" resultType="camping">
+	 	select c.*, ac.*, inter.*, intro.*, safe.*, img.first_img
+   			from camping c
+    		join camping_activity ac on c.camping_idx = ac.camping_idx
+    		join camping_internal inter on c.camping_idx = inter.camping_idx
+    		join camping_introduce intro on c.camping_idx = intro.camping_idx
+    		join camping_safety_device safe on c.camping_idx = safe.camping_idx
+    		join camping_img img on c.camping_idx = img.camping_idx
+    		where c.camping_idx = #{camping_idx}
+    		and img.first_img is not null
+	</select>
+	
+	<select id="selectOneImage" resultType="camping" parameterType="int">
+		    select c.camping_idx, img.inner_img
+        		from camping c
+       			join camping_img img
+        		on c.camping_idx = img.camping_idx
+        		where c.camping_idx = #{camping_idx}
+        		and img.inner_img is not null
+	</select>
+	
+	<select id="getSearchTotal" resultType="int" parameterType="hashmap">
+		select count(*) 
+			from camping c
+			join camping_img img
+			on c.camping_idx = img.camping_idx
+			where img.first_img is not null
+				<if test="firstSelect != '' and firstSelect != '전체'">
+					and doNm = #{firstSelect} 
+				</if>
+				<if test="secondSelect != '' and secondSelect != '전체'">
+					and sigunguNm = #{secondSelect} 
+				</if>
+				<if test="details != '' and details != '전체'">
+					and lctcl = #{details} 
+				</if>			
+				<if test="keyword != ''">
+					and facltnm like '%${keyword}%'
+				</if>
+			order by c.camping_idx desc 
+	</select>
+
+	<select id="search" parameterType="hashmap" resultType="camping">
+		select c.*, img.first_img 
+			from camping c
+			join camping_img img
+			on c.camping_idx = img.camping_idx
+			where img.first_img is not null
+				<if test="firstSelect != '' and firstSelect != '전체'">
+					and doNm = #{firstSelect} 
+				</if>
+				<if test="secondSelect != '' and secondSelect != '전체'">
+					and sigunguNm = #{secondSelect} 
+				</if>
+				<if test="details != '' and details != '전체'">
+					and lctcl = #{details} 
+				</if>			
+				<if test="keyword != ''">
+					and facltnm like '%${keyword}%'
+				</if>
+			order by c.camping_idx desc 
+			offset #{paging.offset} rows
+            fetch next #{paging.perPage} rows only
+	</select>	
+	
+
+</mapper>
