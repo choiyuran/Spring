@@ -1,5 +1,7 @@
 package com.itbank.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class CampingDTO {
 	private int camping_idx;
 	private String facltnm;
@@ -26,6 +28,9 @@ public class CampingDTO {
 	// camping_img
 	private String first_img;
 	private String inner_img;
+	
+	private MultipartFile upload1;
+	private MultipartFile[] upload2;
 	
 	// camping_internal
 	private String sbrsCl;
@@ -380,6 +385,17 @@ public class CampingDTO {
 	public void setSigunguNm(String sigunguNm) {
 		this.sigunguNm = sigunguNm;
 	}
-	
+	public MultipartFile getUpload1() {
+		return upload1;
+	}
+	public void setUpload1(MultipartFile upload1) {
+		this.upload1 = upload1;
+	}
+	public MultipartFile[] getUpload2() {
+		return upload2;
+	}
+	public void setUpload2(MultipartFile[] upload2) {
+		this.upload2 = upload2;
+	}
 	
 }

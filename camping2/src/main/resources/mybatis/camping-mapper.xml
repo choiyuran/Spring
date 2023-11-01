@@ -19,7 +19,6 @@
                     fetch next #{paging.perPage} rows only
 	</select>
 	
-	
 	<select id="selectOne" parameterType="int" resultType="camping">
 	 	select c.*, ac.*, inter.*, intro.*, safe.*, img.first_img
    			from camping c
@@ -85,5 +84,99 @@
             fetch next #{paging.perPage} rows only
 	</select>	
 	
-
+	<insert id="campingInsert" parameterType="camping">
+		insert into camping
+			(facltnm,
+			featurenm,
+			tooltip,
+			induty,
+			tel,
+			homepage,
+			lctcl,
+			addr1,
+			donm,
+			sifunfunm)
+		values(
+			#{facltnm},
+			#{featurenm},
+			#{tooltip},
+			#{induty},
+			#{tel},
+			#{homepage},
+			#{lctcl},
+			#{addr1},
+			#{donm},
+			#{sifunfunm}
+		)
+	</insert>
+	
+	<select id="maxCampingIdx" resultType="int">
+		select max(camping_idx) from camping
+	</select>
+	
+	<insert id="campingImgInsert" parameterType="camping">
+		insert into camping_img
+			values(#{maxCampingIdx}, #{first_img}, #{inner_img})
+	</insert>
+	
+	<insert id="activityInsert" parameterType="camping">
+		insert into camping_activity
+			values(#{maxCampingIdx}, #{posblfcltycl}, #{posblfcltyetc}, #{exprnprogrmat}, #{exprnprogrm}, #{direction})
+	</insert>
+	
+	<insert id="introduceInsert">
+		insert into camping_introduce
+			values(
+				#{maxCampingIdx},
+				#{caravacmpnyat},
+				#{trleracmpnyat},
+				#{operpdcl},
+				#{operdecl},
+				#{themaenvrncl},
+				#{eqpmnlendcl},
+				#{animalcmgcl},
+				#{sitebottomcl1},
+				#{sitebottomcl2},
+				#{sitebottomcl3},
+				#{sitebottomcl4},
+				#{sitebottomcl5}
+			)
+	</insert>
+	 
+	 <insert id="internalInsert" parameterType="hashmap">
+	 	insert into camping_internal
+	 		values(
+	 			#{maxCampingIdx},
+	 			#{sbrscl},
+	 			#{sbrsetc},
+	 			#{toiletco},
+	 			#{swrmco},
+	 			#{glampinnerfclty},
+	 			#{caravinnerfclty}
+	 		)
+	 </insert>
+	
+	<insert id="safetyDeviceInsert" parameterType="hashmap">
+		insert into camping_safety_device
+			values(
+				#{maxCampingIdx},
+				#{extshrCo},
+				#{frprvtwrppco},
+				#{frprvtsandco},
+				#{firesensorco}
+			)
+	</insert>
+	
+	<insert id="campingSiteInsert" parameterType="hashmap">
+		insert into camping_site
+			values(
+				#{maxCampingIdx},
+				#{sitemg1co},
+				#{sitemg2co},
+				#{sitemg3co},
+				#{sitemg1_price},
+				#{sitemg2_price},
+				#{sitemg3_price}
+			)
+	</insert>
 </mapper>
