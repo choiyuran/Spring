@@ -6,7 +6,7 @@
 <mapper namespace="com.itbank.repository.CampingDAO">
 	<select id="getTotalCount" resultType="int">
 		select count(*) from camping
-	</select>
+	</select> 
 	
 	<select id="selectAll" resultType="camping" parameterType="hashmap">
 		select c.camping_idx, c.facltNm, c.featurenm, c.intro, c.lineintro, c.tel, c.lctcl, c.addr1, c.camping_viewcount, ci.sbrscl, cimg.first_img 
@@ -20,7 +20,7 @@
 	</select>
 	
 	<select id="selectOne" parameterType="int" resultType="camping">
-	 	select c.*, ac.*, inter.*, intro.*, safe.*, img.first_img
+	 	select c.*, ac.*, inter.*, intro.*, safe.*, img.*
    			from camping c
     		join camping_activity ac on c.camping_idx = ac.camping_idx
     		join camping_internal inter on c.camping_idx = inter.camping_idx
@@ -39,6 +39,14 @@
         		where c.camping_idx = #{camping_idx}
         		and img.inner_img is not null
 	</select>
+	
+<!-- 	<select id="selectInnerImg" parameterType="int"> -->
+<!-- 		select * from  -->
+<!-- 			camping_img  -->
+<!-- 			where first_img is not null  -->
+<!-- 			and inner_img is not null  -->
+<!-- 			and camping_idx = #{camping_idx} -->
+<!-- 	</select> -->
 	
 	<select id="getSearchTotal" resultType="int" parameterType="hashmap">
 		select count(*) 
@@ -86,6 +94,7 @@
 	
 	<insert id="campingInsert" parameterType="camping">
 		insert into camping
+<!-- 			(userid, -->
 			(facltnm,
 			featurenm,
 			tooltip,
@@ -95,8 +104,9 @@
 			lctcl,
 			addr1,
 			donm,
-			sifunfunm)
+			sigungunm)
 		values(
+<!-- 			#{userid}, -->
 			#{facltnm},
 			#{featurenm},
 			#{tooltip},
@@ -105,8 +115,8 @@
 			#{homepage},
 			#{lctcl},
 			#{addr1},
-			#{donm},
-			#{sifunfunm}
+			#{doNm},
+			#{sigunguNm}
 		)
 	</insert>
 	
@@ -116,25 +126,48 @@
 	
 	<insert id="campingImgInsert" parameterType="camping">
 		insert into camping_img
-			values(#{maxCampingIdx}, #{first_img}, #{inner_img})
+			values(#{camping_idx}, #{first_img}, #{inner_img})
+	</insert>
+
+	<insert id="campingPlaceInsert" parameterType="camping">
+		insert into camping_place
+			values(
+				#{camping_idx},
+				#{mapX},
+				#{mapY}
+			)
 	</insert>
 	
 	<insert id="activityInsert" parameterType="camping">
 		insert into camping_activity
-			values(#{maxCampingIdx}, #{posblfcltycl}, #{posblfcltyetc}, #{exprnprogrmat}, #{exprnprogrm}, #{direction})
+			values(#{camping_idx}, #{posblFcltyCl}, #{posblFcltyEtc}, #{exprnprogrmat}, #{exprnprogrm}, #{direction})
 	</insert>
 	
-	<insert id="introduceInsert">
-		insert into camping_introduce
+	<insert id="introduceInsert" parameterType="camping">
+		insert into camping_introduce(
+			camping_idx,
+			caravAcmpnyAt,
+			trlerAcmpnyAt,
+			operPdCl,
+			operDeCl,
+			themaEnvrnCl,
+			eqpmnLendCl,
+			animalCmgCl,
+			sitebottomcl1,
+			sitebottomcl2,
+			sitebottomcl3,
+			sitebottomcl4,
+			sitebottomcl5
+			)
 			values(
-				#{maxCampingIdx},
-				#{caravacmpnyat},
-				#{trleracmpnyat},
-				#{operpdcl},
-				#{operdecl},
-				#{themaenvrncl},
-				#{eqpmnlendcl},
-				#{animalcmgcl},
+				#{camping_idx},
+				#{caravAcmpnyAt},
+				#{trlerAcmpnyAt},
+				#{operPdCl},
+				#{operDeCl},
+				#{themaEnvrnCl},
+				#{eqpmnLendCl},
+				#{animalCmgCl},
 				#{sitebottomcl1},
 				#{sitebottomcl2},
 				#{sitebottomcl3},
@@ -143,40 +176,187 @@
 			)
 	</insert>
 	 
-	 <insert id="internalInsert" parameterType="hashmap">
+	 <insert id="internalInsert" parameterType="camping">
 	 	insert into camping_internal
 	 		values(
-	 			#{maxCampingIdx},
-	 			#{sbrscl},
-	 			#{sbrsetc},
-	 			#{toiletco},
-	 			#{swrmco},
-	 			#{glampinnerfclty},
-	 			#{caravinnerfclty}
+	 			#{camping_idx},
+	 			#{sbrsCl},
+	 			#{sbrsEtc},
+	 			#{toiletCo},
+	 			#{swrmCo},
+	 			#{glamplnnerFclty},
+	 			#{caravlnnerFclty}
 	 		)
 	 </insert>
 	
-	<insert id="safetyDeviceInsert" parameterType="hashmap">
+	<insert id="safetyDeviceInsert" parameterType="camping">
 		insert into camping_safety_device
 			values(
-				#{maxCampingIdx},
+				#{camping_idx},
 				#{extshrCo},
-				#{frprvtwrppco},
-				#{frprvtsandco},
-				#{firesensorco}
+				#{frprvtWrppCo},
+				#{frprvtSandCo},
+				#{fireSensorCo}
 			)
 	</insert>
 	
-	<insert id="campingSiteInsert" parameterType="hashmap">
+	<insert id="campingSiteInsert" parameterType="camping">
 		insert into camping_site
 			values(
-				#{maxCampingIdx},
-				#{sitemg1co},
-				#{sitemg2co},
-				#{sitemg3co},
-				#{sitemg1_price},
-				#{sitemg2_price},
-				#{sitemg3_price}
+				#{camping_idx},
+				#{siteMg1Co},
+				#{siteMg2Co},
+				#{siteMg3Co},
+				#{siteMg1_price},
+				#{siteMg2_price},
+				#{siteMg3_price}
 			)
 	</insert>
+	
+	<update id="updateCamping" parameterType="camping">
+		update camping
+			set facltnm = #{facltnm},
+			featurenm = #{featurenm},
+			tooltip = #{tooltip},
+			induty = #{induty},
+			tel = #{tel},
+			homepage = #{homepage},
+			lctcl = #{lctcl},
+			addr1 = #{addr1},
+			donm = #{doNm},
+			sigungunm = #{sigunguNm}
+			where camping_idx = #{camping_idx}
+	</update>
+	
+	<update id="updateCampingImg" parameterType="camping">
+		update camping_img
+			set
+			first_img = #{first_img},
+			inner_img = #{inner_img}
+			where camping_idx = #{camping_idx}
+	</update>
+	
+	<update id="updateInfoTwo" parameterType="camping">
+		update camping_place
+			set mapX = #{mapX},
+			mapY = #{mapY}
+			where camping_idx = #{camping_idx}
+	</update>
+	
+	<update id="updateActivity" parameterType="camping">
+		update camping_activity
+			set posblFcltyCl = #{posblFcltyCl},
+			posblFcltyEtc = #{posblFcltyEtc},
+			exprnprogrmat = #{exprnprogrmat},
+			exprnprogrm = #{exprnprogrm},
+			direction = #{direction}
+			where camping_idx = #{camping_idx}
+	</update>
+	<update id="updateIntroduce" parameterType="camping">
+		update camping_introduce
+			set caravAcmpnyAt = #{caravAcmpnyAt},
+			trlerAcmpnyAt = #{trlerAcmpnyAt},
+			operPdCl = #{operPdCl},
+			operDeCl = #{operDeCl},
+			themaEnvrnCl = #{themaEnvrnCl},
+			eqpmnLendCl = #{eqpmnLendCl},
+			animalCmgCl = #{animalCmgCl},
+			sitebottomcl1 = #{sitebottomcl1},
+			sitebottomcl2 = #{sitebottomcl2},
+			sitebottomcl3 = #{sitebottomcl3},
+			sitebottomcl4 = #{sitebottomcl4},
+			sitebottomcl5 = #{sitebottomcl5}
+			where camping_idx = #{camping_idx}
+	</update>
+	
+	<update id="updateInternal" parameterType="camping">
+		update camping_internal
+			set 
+			sbrsCl = #{sbrsCl},
+			sbrsEtc = #{sbrsEtc},
+			toiletCo = #{toiletCo},
+			swrmCo = #{swrmCo},
+			GLAMPINNERFCLTY = #{glamplnnerFclty},
+			CARAVINNERFCLTY = #{caravlnnerFclty}
+			where camping_idx = #{camping_idx}
+	</update>
+	
+	<update id="updateSafety" parameterType="camping">
+		update camping_safety_device
+			set 
+			extshrCo = #{extshrCo},
+			frprvtWrppCo = #{frprvtWrppCo},
+			frprvtSandCo = #{frprvtSandCo},
+			fireSensorCo = #{fireSensorCo}
+			where camping_idx = #{camping_idx}
+	</update>
+	
+	<update id="updateSite" parameterType="camping">
+		update camping_site
+			set
+			siteMg1Co = #{siteMg1Co},
+			siteMg2Co = #{siteMg2Co},
+			siteMg3Co = #{siteMg3Co},
+			siteMg1_price = #{siteMg1_price},
+			siteMg2_price = #{siteMg2_price},
+			siteMg3_price = #{siteMg3_price}
+			where camping_idx = #{camping_idx}
+	</update>
+	
+	<!-- 이전 버튼 누를 때 삭제 -->
+	<delete id="deleteCamping" parameterType="int">
+		delete camping where camping_idx = #{camping_idx}
+	</delete>
+	
+	<delete id="deleteCampingImg" parameterType="camping">
+		delete camping_img where camping_idx = #{camping_idx}
+	</delete>
+	
+	<delete id="deleteCampingActivity" parameterType="int">
+		delete camping_activity where camping_idx = #{camping_idx}
+	</delete>
+	
+	<delete id="deleteCampingIntoduce" parameterType="int">
+		delete camping_introduce where camping_idx = #{camping_idx}
+	</delete>
+	
+	<delete id="deleteCampingPlace" parameterType="int">
+		delete camping_place where camping_idx = #{camping_idx}
+	</delete>
+	
+	<delete id="deleteCampingInternal" parameterType="int">
+		delete camping_internal where camping_idx = #{camping_idx}
+	</delete>
+	
+	<delete id="deleteCampingSafetyDevice" parameterType="int">
+		delete camping_safety_device where camping_idx = #{camping_idx}
+	</delete>
+	
+	<delete id="deleteCampingSite" parameterType="int">
+		delete camping_site where camping_idx = #{camping_idx}
+	</delete>
+	
+	<select id="selectCamping" resultType="camping" parameterType="int">
+		select *
+			from camping c
+			join camping_img img
+			on c.camping_idx = img.camping_idx
+			where c.camping_idx = #{camping_idx}
+	</select>
+	
+	<select id="selectCampingTwo" resultType="camping" parameterType="int">
+		select pla.*, ac.*, intro.*
+		 	from camping_place pla 
+		 	join camping_activity ac on pla.camping_idx = ac.camping_idx
+		 	join camping_introduce intro on pla.camping_idx = intro.camping_idx
+		 	where pla.camping_idx = #{camping_idx}
+	</select>
+	
+	<select id="selectCampingThree" resultType="camping" parameterType="int">
+		select inter.*, safe.*, site.*
+			from camping_internal inter
+			join camping_safety_device safe on inter.camping_idx = safe.camping_idx
+			join camping_site site on inter.camping_idx = site.camping_idx
+			where inter.camping_idx = #{camping_idx}
+	</select>
 </mapper>

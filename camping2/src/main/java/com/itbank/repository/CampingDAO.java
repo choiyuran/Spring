@@ -20,20 +20,67 @@ public interface CampingDAO {
 
 	int getSearchTotal(HashMap<String, Object> param);
 
-	int campingInsert(CampingDTO form);
+	int campingInsert(CampingDTO dto);
 	int maxCampingIdx();
 
-	int campingImgInsert(CampingDTO form);
+	int campingImgInsert(CampingDTO dto);
+
+	int campingPlaceInsert(CampingDTO dto);
 
 	int activityInsert(CampingDTO param);
 
 	int introduceInsert(CampingDTO param);
 
-	int internalInsert(HashMap<String, Object> map);
+	int internalInsert(CampingDTO dto);
 
-	int safetyDeviceInsert(HashMap<String, Object> map);
+	int safetyDeviceInsert(CampingDTO dto);
 
-	int campingSiteInsert(HashMap<String, Object> map);
+	int campingSiteInsert(CampingDTO dto);
+
+	int updateCamping(CampingDTO dto);
+
+	int updateCampingImg(CampingDTO dto);
+
+	int updateInfoTwo(CampingDTO dto);
+
+	int updateActivity(CampingDTO dto);
+
+	int updateIntroduce(CampingDTO dto);
+
+	int deleteCamping(int maxCampingIdx);
+
+	int deleteCampingImg(CampingDTO dto);
+
+	int deleteCampingActivity(int maxCampingIdx);
+
+	int deleteCampingIntoduce(int maxCampingIdx);
+
+	int deleteCampingPlace(int maxCampingIdx);
+
+	CampingDTO selectCamping(int camping_idx);
+
+	CampingDTO selectCampingTwo(int camping_idx);
+
+	int updateInternal(CampingDTO dto);
+
+	int updateSafety(CampingDTO dto);
+
+	int updateSite(CampingDTO dto);
+
+	CampingDTO selectCampingThree(int camping_idx);
+
+	CampingDTO selectOneByImg(int maxCampingIdx);
+
+	void deleteCampingInternal(int camping_idx);
+
+	void deleteCampingSafetyDevice(int camping_idx);
+
+	void deleteCampingSite(int camping_idx);
+
+	CampingDTO selectInnerImg(int camping_idx);
+
+
+
 
 
 	

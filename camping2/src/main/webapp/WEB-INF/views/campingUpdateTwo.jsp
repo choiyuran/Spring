@@ -4,24 +4,24 @@
 
 <div class="container mt-3">
   <h2>캠핑장 상세등록</h2>
-	  <form method="POST" action="${cpath }/newCampingSecond">
+	  <form method="POST" action="${cpath }/campingUpdateTwo/${camping_idx}">
 	  	<input type="hidden" name="mapX" id="mapX">
 	  	<input type="hidden" name="mapY" id="mapY">
 	    <div class="mb-3 mt-3">
 	      <label>주변 이용 가능 시설:</label>
-	      <input type="text" name="posblFcltyCl">
+	      <input type="text" name="posblFcltyCl" value="${camping.posblFcltyCl }">
 	    </div>
 	    <div class="mb-3">
 	      <label>주변 이용 가능 시설 기타:</label>
-	      <input type="text" name="posblFcltyEtc">
+	      <input type="text" name="posblFcltyEtc" value="${camping.posblFcltyEtc }">
 	    </div>
 	    <div class="mb-3">
 	      <label>체험 프로그램:</label>
-	     	<input type="text" name="exprnprogrm">
+	     	<input type="text" name="exprnprogrm" value="${camping.exprnprogrm }">
 	    </div>
 	    <div class="mb-3">
 	      <label>오시는 길:</label>
-	     	<input type="text" name="direction">
+	     	<input type="text" name="direction" value="${camping.direction }">
 	    </div>
 	    <!-- camping_introduce -->
 	     <div class="mb-3">	
@@ -33,9 +33,9 @@
 	    </div>
 	     <div class="mb-3">
 	      <label>개인 트레일러 동반 여부:</label>
-	      	<input type="radio" name="trlerAcmpnyAt" value="Y" required>
+	      	<input type="radio" name="trlerAcmpnyAt" value="Y">
 	      		<label>Y</label>
-	      	<input type="radio" name="trlerAcmpnyAt" value="N" required>
+	      	<input type="radio" name="trlerAcmpnyAt" value="N">
 	      		<label>N</label>
 	    </div>
 	     <div class="mb-3">
@@ -51,18 +51,18 @@
 	    </div>
 	     <div class="mb-3">
 	      <label>운영일:</label>
-	     	<input type="checkbox" name="operDeCl" value="평일">
+	     	<input type="checkbox" name="operDeCl" value="평일" required>
 	     		<label>평일</label>
 	     	<input type="checkbox" name="operDeCl" value="주말">
 	     		<label>주말</label>
 	    </div>
 	    <div class="mb-3">
 	      <label>테마환경:</label>
-	     	<input type="text" name="themaEnvrnCl">
+	     	<input type="text" name="themaEnvrnCl" value="${camping.themaEnvrnCl }">
 	    </div>
 	    <div class="mb-3">
 	      <label>기타 장비:</label>
-	     	<input type="text" name="eqpmnLendCl">
+	     	<input type="text" name="eqpmnLendCl" value="${camping.eqpmnLendCl }">
 	    </div>
 	    <div class="mb-3">
 	      <label>애견 동반 여부:</label>
@@ -73,14 +73,12 @@
 	    </div>
 	    <div class="mb-3">
 	      <label>바닥재:</label>
-	     	잔디 : <input type="number" name="sitebottomcl1" required>
-	     	파쇄석 : <input type="number" name="sitebottomcl2" required>
-	     	테크 : <input type="number" name="sitebottomcl3" required>
-	     	자갈 : <input type="number" name="sitebottomcl4" required>
-	     	맨흙 : <input type="number" name="sitebottomcl5" required>
+	     	잔디 : <input type="number" name="sitebottomcl1" required value="${camping.sitebottomcl1 }">
+	     	파쇄석 : <input type="number" name="sitebottomcl2" required value="${camping.sitebottomcl1 }">
+	     	테크 : <input type="number" name="sitebottomcl3" required value="${camping.sitebottomcl1 }">
+	     	자갈 : <input type="number" name="sitebottomcl4" required value="${camping.sitebottomcl1 }">
+	     	맨흙 : <input type="number" name="sitebottomcl5" required value="${camping.sitebottomcl1 }">
 	    </div>
-	    
-		    <button id="prev" class="btn btn-primary">이전</button>
 		    <input type="submit" class="btn btn-primary" value="다음">
 	  </form>
 </div>
@@ -91,10 +89,6 @@
 	})
 </script>
 
-
-<!-- <div id="map" style="width: 700px; height: 550px;"></div>  -->
-	
-	
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7a5f98cddb99a6595fc86122e8b7be5d&libraries=services"></script>
 <script>
 	
@@ -103,15 +97,7 @@
 	
 	function handler(event) {
 		event.preventDefault();
-// 		var mapContainer = document.getElementById('map') // 지도를 표시할 div 
-// 	    mapOption = {
-// 	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-// 	        level: 4 // 지도의 확대 레벨
-// 	    };  
 
-// 		// 지도를 생성합니다    
-// 		var map = new kakao.maps.Map(mapContainer, mapOption); 
-		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
 		const addr = '${addr1}'
 		console.log(addr)
@@ -125,14 +111,6 @@
 		        let mapYValue = result[0].y
 		        console.log(mapX)
 		        console.log(mapY)
-		        
-// 		        // 결과값으로 받은 위치를 마커로 표시합니다
-// 		        var marker = new kakao.maps.Marker({
-// 		            map: map,
-// 		            position: coords
-// 		        });
-// 		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-// 		        map.setCenter(coords);
 		        
 				mapX.value = mapXValue;
 				mapY.value = mapYValue;

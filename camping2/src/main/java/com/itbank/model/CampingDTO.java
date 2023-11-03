@@ -17,6 +17,7 @@ public class CampingDTO {
 	private int camping_viewCount;
 	private String doNm;
 	private String sigunguNm;
+	private String userid;
 	
 	// camping_activity
 	private String posblFcltyCl;
@@ -397,5 +398,12 @@ public class CampingDTO {
 	public void setUpload2(MultipartFile[] upload2) {
 		this.upload2 = upload2;
 	}
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	
 	
 }

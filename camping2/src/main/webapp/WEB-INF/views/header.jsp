@@ -37,6 +37,10 @@
 		background-size: cover;
 		background-repeat: no-repeat;
 	}
+	div.itemImg2 > img {
+		width: 300px;
+		height: 200px;
+	}
 	span.lineIntro {
 		font-size: 16px;
 		display: block;

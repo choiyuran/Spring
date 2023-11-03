@@ -2,9 +2,17 @@
     pageEncoding="UTF-8"%>
 <%@ include file="header.jsp" %>
 
+<a href="${cpath }/campingUpdate/${dto.camping_idx}"><button>캠핑장 수정</button></a>
+<a href="${cpath }/campingDelete/${dto.camping_idx}"><button>캠핑장 삭제</button></a>
+<a href="${cpath }/list"><button>캠핑 리스트</button></a>
 <div style="display:flex; width:1200px; margin:auto; margin-top: 120px;">
 	<div class="container mt-3">
-	  <img src="${dto.first_img }" class="rounded" width="600" height="400"> 
+		<c:if test="${fn:startsWith(dto.first_img, 'https')}">
+			<img src="${dto.first_img }" class="rounded" width="600" height="400">
+		</c:if>
+		<c:if test="${not fn:startsWith(dto.first_img, 'https')}">
+		  <img src="${cpath }/first_img/${dto.first_img }" class="rounded" width="600" height="400"> 
+		</c:if>
 	</div>
 	
 	<div class="container mt-3">
@@ -172,17 +180,66 @@
 	<h5 style="border-bottom: 2px solid black; padding-bottom: 15px;">💡${dto.facltnm }</h5>
 </div>
 
-<div>
-	<div style="margin: auto; width: 1200px; display: flex;">
 
-		<c:forEach var="img" items="${image }">
-			<div style="margin-right:15px;">
-				<img src="${img.inner_img }" class="rounded" width="225" height="150">
-			</div>
-		</c:forEach>	
-			
-	</div>
+
+	
+<div>
+	<c:if test="${image != null && not empty image}">
+	    <div style="margin: auto; width: 1200px; display: flex;">
+	        <c:forEach var="img" items="${image}">
+	            <div style="margin-right:15px;">
+	                <img src="${img.inner_img}" width="200px;" height="100px;">
+	            </div>
+	        </c:forEach>
+	    </div>
+	</c:if>
 </div>
+
+<div>
+	<c:if test="${image == null && empty image }">
+		<c:if test="${dto.inner_img != null }">
+			<c:if test="${fn:contains(dto.inner_img, ',')}">
+		    	<c:set var="imgArray" value="${fn:split(inner_img.inner_img, ',')}" />
+				<c:forEach var="image" items="${imgArray}">
+					<div><img src="${cpath }/inner_img/${image}" class="rounded" width="225" height="150"></div>
+				</c:forEach>	
+			</c:if>
+		</c:if>
+		<c:if test="${not fn:contains(dto.inner_img, ',')}">
+			<div style="margin: auto; width: 1200px; display: flex;">
+				<div style="margin: auto; width: 1200px; display: flex;">
+					<div class="itemImg2" style="cursor: pointer;"><img src="${cpath }/inner_img/${dto.inner_img}"></div>
+				</div>
+			</div>
+		</c:if>
+	
+	</c:if>
+</div>
+
+
+
+
+<div>
+	<c:if test="${image == null && empty image}">
+			<div style="margin: auto; width: 1200px; display: flex;">
+			<c:if test="${fn:contains(inner_img.inner_img, ',')}">
+		    	<c:set var="imgArray" value="${fn:split(inner_img.inner_img, ',')}" />
+				<c:forEach var="image" items="${imgArray}">
+					<div><img src="${cpath }/inner_img/${image}" class="rounded" width="225" height="150"></div>
+				</c:forEach>	
+			</c:if>
+			</div>
+			
+			<c:if test="${not fn:contains(inner_img.inner_img, ',')}">
+			<div style="margin: auto; width: 1200px; display: flex;">
+				<div style="margin: auto; width: 1200px; display: flex;">
+					<div class="itemImg2" style="cursor: pointer;"><img src="${cpath }/inner_img/${inner_img.inner_img}"></div>
+				</div>
+			</div>
+			</c:if>
+		</c:if>
+</div>
+
 
 	<main id="main">
 		<div class="slider__wrap">

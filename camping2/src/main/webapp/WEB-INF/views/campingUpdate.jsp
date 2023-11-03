@@ -8,15 +8,15 @@
   <form method="POST" enctype="multipart/form-data">
     <div class="mb-3 mt-3">
       <label for="facltnm">이름:</label>
-      <input type="text" name="facltnm" required>
+      <input type="text" name="facltnm" required value="${dto.facltnm }">
     </div>
     <div class="mb-3">
       <label for="featurenm">특징:</label><br>
-      <textarea name="featurenm" cols="50" rows="10"></textarea>
+      <textarea name="featurenm" cols="50" rows="10">${dto.featurenm }</textarea>
     </div>
     <div class="mb-3">
       <label for="tooltip">툴팁:</label><br>
-     	<textarea name="tooltip" cols="50" rows="10"></textarea>
+     	<textarea name="tooltip" cols="50" rows="10">${dto.tooltip }</textarea>
     </div>
     <div class="mb-3">
    		<label for="induty">업종:</label><br>
@@ -33,11 +33,11 @@
     </div>
     <div class="mb-3">
       <label for="tel">연락처:</label>
-     	<input type="text" name="tel">
+     	<input type="text" name="tel" value="${dto.tel }">
     </div>
     <div class="mb-3">
       <label for="homepage">홈페이지:</label>
-     	<input type="text" name="homepage">
+     	<input type="text" name="homepage" value="${dto.homepage }"> 
     </div>
     <div class="mb-3">
 	    <label for="lctcl">입지:</label>

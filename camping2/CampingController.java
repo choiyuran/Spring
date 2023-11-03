@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.itbank.model.CampingDTO;
 import com.itbank.model.Paging;
+import com.itbank.model.UserDTO;
 import com.itbank.service.CampingService;
 
 @Controller
@@ -75,10 +76,8 @@ public class CampingController {
 		ModelAndView mav = new ModelAndView("view");
 		CampingDTO dto = campingService.selectOne(camping_idx);
 		List<CampingDTO> image = campingService.selectOneImage(camping_idx);
-//		CampingDTO inner_img = campingService.selectInnerImg(camping_idx);
 		mav.addObject("dto", dto);
 		mav.addObject("image", image);
-//		mav.addObject("inner_img", inner_img);
 		return mav;
 	}
 	
@@ -100,7 +99,7 @@ public class CampingController {
 //		 여기서부터 !
 		if(row1 != 0) {
 			dto.setCamping_idx(maxCampingIdx);
-			campingService.campingImgInsert(dto);
+			int row2 = campingService.campingImgInsert(dto);
 		}
 		mav.addObject("addr1", dto.getAddr1());
 		return mav;
@@ -112,43 +111,46 @@ public class CampingController {
 		int maxCampingIdx = campingService.maxCampingIdx();
 		// 2.camping_place테이블과 camping_activity테이블과 camping_introduce테이블
 		dto.setCamping_idx(maxCampingIdx);
-		campingService.campingPlaceInsert(dto);
-		campingService.activityInsert(dto);
-		campingService.introduceInsert(dto);
+		int row3 = campingService.campingPlaceInsert(dto);
+		int row4 = campingService.activityInsert(dto);
+		int row5 = campingService.introduceInsert(dto);
 		return "newCampingThird";
 	}
 	
 	// 세번째 form
 	@PostMapping("/newCampingThird")
-	public String newCampingThird(CampingDTO camping) {
+	public ModelAndView newCampingThird(CampingDTO dto) {
+		ModelAndView mav = new ModelAndView("campingInsert");
 		int maxCampingIdx = campingService.maxCampingIdx();
 		// 3.camping_internal테이블과 camping_safety_device테이블과 camping_site테이블
-		camping.setCamping_idx(maxCampingIdx);
-		campingService.internalInsert(camping);
-		campingService.safetyDeviceInsert(camping);
-		campingService.campingSiteInsert(camping);
-		return "redirect:/list/1"; 
+		dto.setCamping_idx(maxCampingIdx);
+		int row6 = campingService.internalInsert(dto);
+		int row7 = campingService.safetyDeviceInsert(dto);
+		int row8 = campingService.campingSiteInsert(dto);
+		CampingDTO resultDTO = campingService.selectOne(maxCampingIdx);
+		mav.addObject("resultDTO", resultDTO);
+		return mav; 
 	}
 	
 	// 두번째에서 이전 누를 때
 	@GetMapping("/prevPage")
 	@ResponseBody
 	public String prevPage() {
+		ModelAndView mav = new ModelAndView("newCamping");
 		int maxCampingIdx = campingService.maxCampingIdx();
-		System.out.println(maxCampingIdx);
-		CampingDTO dto = campingService.selectOneByImg(maxCampingIdx);
-		campingService.deleteCampingImg(dto);
-		campingService.deleteCamping(maxCampingIdx);
+		int row = campingService.deleteCampingImg(maxCampingIdx);
+		int row2 = campingService.deleteCamping(maxCampingIdx);
 		return "<script>history.go(-2);</script>";
 	}
 
 	@GetMapping("/prevPageTwo")
 	@ResponseBody
 	public String prevPagetwo() {
+		ModelAndView mav = new ModelAndView("newCampingSecond");
 		int maxCampingIdx = campingService.maxCampingIdx();
-		campingService.deleteCampingActivity(maxCampingIdx);
-		campingService.deleteCampingIntoduce(maxCampingIdx);
-		campingService.deleteCampingPlace(maxCampingIdx);
+		int row = campingService.deleteCampingActivity(maxCampingIdx);
+		int row2 = campingService.deleteCampingIntoduce(maxCampingIdx);
+		int row3 = campingService.deleteCampingPlace(maxCampingIdx);
 		return "<script>history.go(-2);</script>";
 	}
 	
@@ -166,8 +168,8 @@ public class CampingController {
 		dto.setDoNm(firstSelect);
 		dto.setSigunguNm(secondSelect);
 		dto.setAddr1(firstSelect + " " + secondSelect +  " " + dto.getAddr1()); 
-		campingService.updateCamping(dto);
-		campingService.updateCampingImg(dto);
+		int row = campingService.updateCamping(dto);
+		int row2 = campingService.updateCampingImg(dto);
 		CampingDTO camping = campingService.selectCampingTwo(camping_idx);
 		mav.addObject("addr1", dto.getAddr1());
 		mav.addObject("camping", camping);
@@ -180,38 +182,38 @@ public class CampingController {
 		dto.setCamping_idx(camping_idx);
 		dto.setMapX(dto.getMapX());
 		dto.setMapY(dto.getMapY());
-		campingService.updateActivity(dto);
-		campingService.updateIntroduce(dto);
-		campingService.updateInfoTwo(dto);
+		int row = campingService.updateActivity(dto);
+		int row2 = campingService.updateIntroduce(dto);
+		int row3 = campingService.updateInfoTwo(dto);
 		CampingDTO camping = campingService.selectCampingThree(camping_idx);
 		mav.addObject("camping", camping);
 		mav.addObject("camping_idx", camping_idx);
 		return mav;
 	}
 	@PostMapping("/campingUpdateThird/{camping_idx}")
-	public ModelAndView campingUpdateThird(@PathVariable("camping_idx")int camping_idx, CampingDTO camping) {
+	public ModelAndView campingUpdateThird(@PathVariable("camping_idx")int camping_idx, CampingDTO dto) {
 		ModelAndView mav = new ModelAndView("view");
-		camping.setCamping_idx(camping_idx);
-		campingService.updateInternal(camping);
-		campingService.updateSafety(camping);
-		campingService.updateSite(camping);
-		CampingDTO dto = campingService.selectOne(camping_idx);
-		mav.addObject("dto", dto);
+		dto.setCamping_idx(camping_idx);
+		int row = campingService.updateInternal(dto);
+		int row2 = campingService.updateSafety(dto);
+		int row3 = campingService.updateSite(dto);
 		return mav;
 	}
 	
-	@GetMapping("/campingDelete/{camping_idx}")
-	public String campingDelete(@PathVariable("camping_idx")int camping_idx) {
-		campingService.deleteCampingSite(camping_idx);
-		campingService.deleteCampingSafetyDevice(camping_idx);
-		campingService.deleteCampingInternal(camping_idx);
-		campingService.deleteCampingPlace(camping_idx);
-		campingService.deleteCampingIntoduce(camping_idx);
-		campingService.deleteCampingActivity(camping_idx);
-		CampingDTO dto = campingService.selectOneByImg(camping_idx);
-		campingService.deleteCampingImg(dto);
-		campingService.deleteCamping(camping_idx);
-		return "redirect:/list/1";
-	}
+//	@GetMapping("/campingUpdateTwo/{camping_idx}") 
+//	public ModelAndView campingUpdateTwo(@PathVariable("camping_idx") int camping_idx) {
+//		ModelAndView mav = new ModelAndView("campingUpdateTwo");
+//		CampingDTO dto = campingService.selectCampingTwo(camping_idx);
+//		mav.addObject("mav", mav);
+//		return mav;
+//	}
+	
+//	@GetMapping("/campingUpdateTwo/{camping_idx}")
+//	public ModelAndView campingUpdateTwo(@PathVariable("camping_idx")int camping_idx) {
+//		ModelAndView mav = new ModelAndView("campingUpdateThree");
+//		int row = campingService.updateInfoTwo(dto);
+//		return mav;
+//	}
+
 	
 }

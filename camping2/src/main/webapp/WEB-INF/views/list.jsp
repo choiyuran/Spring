@@ -78,7 +78,12 @@
 			<c:forEach var="dto" items="${list }">
 				<div class="item d-flex">
 					<div class="p-3">
-						<div class="itemImg" style="background-image: url('${dto.first_img}'); cursor: pointer;" OnClick="location.href='${cpath }/view/${dto.camping_idx}'"></div>
+						<c:if test="${fn:startsWith(dto.first_img, 'https')}">
+							<div class="itemImg" style="background-image: url('${dto.first_img}'); cursor: pointer;" OnClick="location.href='${cpath }/view/${dto.camping_idx}'"></div>
+						</c:if>
+						<c:if test="${not fn:startsWith(dto.first_img, 'https')}">
+							<div class="itemImg2" style="cursor: pointer;" OnClick="location.href='${cpath }/view/${dto.camping_idx}'"><img src="${cpath }/first_img/${dto.first_img}"></div>
+						</c:if>
 					</div>
 	
 					<div class="mt-3 ms-3 itemText">
@@ -278,8 +283,13 @@
 	        var busanOptions = ["전체", "경산시", "경주시", "고령군", "구미시", "김천시", "문경시", "봉화군", "상주시", "성주군",
 	        	"안동시", "영덕군", "영양군", "영주시", "영천시", "예천군", "울릉군", "울진군", "의성군", "청도군", "청송군", "칠곡군", "포항시"];
 	        fillSecondOptions(busanOptions);
-	    
-		} else if(selectedValue == '경상남도') {
+	        
+		} else if (selectedValue == '경상남도') {
+	        var busanOptions = ["전체", "거제시", "거창군", "고성군", "김해시", "남해군", "밀양시", "사천시", "산청군", "양산시",
+	        	"의령군", "진주시", "창녕군", "창원시", "통영시", "하동군", "함안군", "함양군", "합천군"];
+	        fillSecondOptions(busanOptions);  
+	        
+		} else if(selectedValue == '제주도') {
 	        var busanOptions = ["전체", "서귀포시", "제주시"];
 	        fillSecondOptions(busanOptions);
 	    }

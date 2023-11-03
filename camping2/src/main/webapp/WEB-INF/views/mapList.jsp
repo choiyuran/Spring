@@ -360,8 +360,13 @@
 	        var busanOptions = ["전체", "경산시", "경주시", "고령군", "구미시", "김천시", "문경시", "봉화군", "상주시", "성주군",
 	        	"안동시", "영덕군", "영양군", "영주시", "영천시", "예천군", "울릉군", "울진군", "의성군", "청도군", "청송군", "칠곡군", "포항시"];
 	        fillSecondOptions(busanOptions);
-	    
-		} else if(selectedValue == '경상남도') {
+	        
+		} else if (selectedValue == '경상남도') {
+	        var busanOptions = ["전체", "거제시", "거창군", "고성군", "김해시", "남해군", "밀양시", "사천시", "산청군", "양산시",
+	        	"의령군", "진주시", "창녕군", "창원시", "통영시", "하동군", "함안군", "함양군", "합천군"];
+	        fillSecondOptions(busanOptions);  
+	        
+		} else if(selectedValue == '제주도') {
 	        var busanOptions = ["전체", "서귀포시", "제주시"];
 	        fillSecondOptions(busanOptions);
 	    }
