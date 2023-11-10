@@ -1,0 +1,38 @@
+[userModal.jsp]
+- 로그인 버튼 초록
+style="background-color:green">로그인</button>
+- 회원가입/ ID,PW 찾기 노란색
+<button class="btn btn-primary p-2"
+								style="width: 150px; margin-left: 48px; background-color:green; border:none;">회원가입</button>
+						</a> <a data-bs-toggle="modal" href="#findIDPW" role="button">
+							<button class="btn btn-primary p-2"
+								style="width: 150px; margin-right: 63px; background-color:green; border:none;">ID/PW찾기</button>
+- close 초록색
+<button type="button" class="btn btn-danger" data-bs-dismiss="modal" style="background-color:green; border:none;">Close</button>
+
+
+[reserveModal.jsp]
+- close 버튼 다 노란색
+style="background-color: #ffc107; border; color:white; border:none;"
+
+
+[reservation.jsp]
+- 예약 정보 확인 및 결제 하러가기 버튼 노란색
+background-color: #ffc107; border; color:white; border:none;
+
+[confirm.jsp]
+- 동일하게 노란색
+w-75 빼고 
+width:950px; background-color: #ffc107; border; color:white; border:none;
+
+[회원가입]
+- Login 버튼/ 일반 회원가입/ 사업자 회원가입 / 회원가입 버튼 초록색
+style="background-color: green; border: none;"
+- 중복확인/ PW 확인/ 인증번호 발송/본인인증/사업자 인증 등 인증 받는거 노란색
+background-color: #ffc107; border; color:white; border:none;
+
+
+[ID/Pw 찾기]
+- Login초록색
+style="background-color: green; border: none;"
+- close 노란색
