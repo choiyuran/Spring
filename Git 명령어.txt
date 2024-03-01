@@ -1,0 +1,4 @@
+1. git clone 주소 붙여넣기(shift + Insert)
+2. git add .
+3. git commit -m "메시지"
+4. git status(현재 상태 보기)
